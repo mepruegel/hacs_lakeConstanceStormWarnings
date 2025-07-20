@@ -24,7 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 class LakeConstanceStormCheckerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Lake Constance Storm Checker."""
 
-    VERSION = 1
+    VERSION = 5
 
     def __init__(self) -> None:
         """Initialize the config flow."""
