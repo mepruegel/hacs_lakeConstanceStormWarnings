@@ -1,0 +1,105 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bodensee Sturmwarnung",
+        "description": "Konfigurieren Sie die Bodensee Sturmwarnung Integration zur Überwachung von Sturmwarnungen für Bodensee-Bereiche.",
+        "data": {
+          "base_url": "Basis-URL",
+          "api_code": "API-Code"
+        }
+      },
+      "test_connection": {
+        "title": "Verbindung testen",
+        "description": "Teste Verbindung zur Bodensee Sturmwarnung API..."
+      },
+      "options": {
+        "title": "Optionen",
+        "description": "Konfigurieren Sie zusätzliche Optionen für die Bodensee Sturmwarnung Integration.",
+        "data": {
+          "scan_interval": "Aktualisierungsintervall (Sekunden)",
+          "custom_names": {
+            "west": "West-Bereich Name",
+            "center": "Mittel-Bereich Name",
+            "east": "Ost-Bereich Name"
+          }
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zur API fehlgeschlagen. Bitte überprüfen Sie die Basis-URL und den API-Code.",
+      "invalid_auth": "Ungültiger API-Code. Bitte überprüfen Sie Ihre Anmeldedaten.",
+      "unknown": "Ein unerwarteter Fehler ist aufgetreten.",
+      "invalid_response": "Ungültige Antwort von der API.",
+      "missing_data": "Erforderliche Daten aus der API-Antwort fehlen."
+    },
+    "abort": {
+      "already_configured": "Gerät ist bereits konfiguriert."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Optionen",
+        "description": "Konfigurieren Sie zusätzliche Optionen für die Bodensee Sturmwarnung Integration.",
+        "data": {
+          "scan_interval": "Aktualisierungsintervall (Sekunden)",
+          "custom_names": {
+            "west": "West-Bereich Name",
+            "center": "Mittel-Bereich Name",
+            "east": "Ost-Bereich Name"
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "lake_constance_west_status": {
+        "name": "Bodensee West Status"
+      },
+      "lake_constance_center_status": {
+        "name": "Bodensee Mitte Status"
+      },
+      "lake_constance_east_status": {
+        "name": "Bodensee Ost Status"
+      },
+      "lake_constance_last_update": {
+        "name": "Bodensee Letzte Aktualisierung"
+      }
+    },
+    "binary_sensor": {
+      "lake_constance_west_warning": {
+        "name": "Bodensee West Warnung"
+      },
+      "lake_constance_center_warning": {
+        "name": "Bodensee Mitte Warnung"
+      },
+      "lake_constance_east_warning": {
+        "name": "Bodensee Ost Warnung"
+      },
+      "lake_constance_storm_warning": {
+        "name": "Bodensee Sturmwarnung"
+      },
+      "lake_constance_strong_wind_warning": {
+        "name": "Bodensee Starkwindwarnung"
+      }
+    }
+  },
+  "services": {
+    "refresh": {
+      "name": "Bodensee Sturmdaten aktualisieren",
+      "description": "Manuell die Sturmwarnungsdaten von der API aktualisieren."
+    },
+    "get_area_status": {
+      "name": "Bereichsstatus abrufen",
+      "description": "Den aktuellen Status für einen bestimmten Bodensee-Bereich abrufen.",
+      "fields": {
+        "area": {
+          "name": "Bereich",
+          "description": "Der Bereich, für den der Status abgerufen werden soll (west, center oder east)"
+        }
+      }
+    }
+  }
+} 
