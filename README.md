@@ -1,5 +1,7 @@
 # Lake Constance Storm Checker
 
+![Lake Constance Storm Checker](custom_components/lake_constance_storm_checker/icon.png)
+
 A Home Assistant custom component for monitoring storm warnings for Lake Constance (Bodensee) areas. This integration connects to the Lake Constance Storm Checker API to provide real-time storm warning information for the West, Center, and East areas of Lake Constance.
 
 ## Features
