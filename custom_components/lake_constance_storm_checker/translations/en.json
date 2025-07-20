@@ -13,6 +13,7 @@
     "error": {
       "cannot_connect": "Failed to connect to the API. Please check the base URL and API code.",
       "invalid_auth": "Invalid API code. Please check your credentials.",
+      "invalid_url": "Please enter a valid API endpoint URL. The placeholder URL cannot be used.",
       "unknown": "Unexpected error occurred."
     },
     "abort": {

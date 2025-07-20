@@ -48,7 +48,14 @@ class LakeConstanceStormCheckerConfigFlow(config_entries.ConfigFlow, domain=DOMA
                 _LOGGER.debug("Validated input - Base URL: %s, API Code: %s", 
                               base_url, "***" if api_code else "None")
 
-                if not api_code:
+                # Check for placeholder URL
+                if base_url == DEFAULT_BASE_URL or "your-api-endpoint.com" in base_url:
+                    _LOGGER.warning("User is using placeholder/default API endpoint URL")
+                    errors["base"] = "invalid_url"
+                elif not base_url:
+                    _LOGGER.warning("Empty base URL provided")
+                    errors["base"] = "invalid_url"
+                elif not api_code:
                     _LOGGER.warning("Empty API code provided")
                     errors["base"] = "invalid_auth"
                 else:
@@ -85,7 +92,7 @@ class LakeConstanceStormCheckerConfigFlow(config_entries.ConfigFlow, domain=DOMA
             data_schema=vol.Schema(
                 {
                     vol.Required(
-                        CONF_BASE_URL, default=DEFAULT_BASE_URL
+                        CONF_BASE_URL, default=""
                     ): str,
                     vol.Required(CONF_API_CODE): str,
                 }
@@ -109,15 +116,46 @@ class LakeConstanceStormCheckerConfigFlow(config_entries.ConfigFlow, domain=DOMA
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, params=params, timeout=10) as response:
                     _LOGGER.debug("Connection test response status: %s", response.status)
+                    _LOGGER.debug("Connection test response headers: %s", dict(response.headers))
                     
                     if response.status == 401 or response.status == 403:
                         _LOGGER.error("Authentication failed during connection test - Status: %s", response.status)
                         raise InvalidAuth()
                     elif response.status != 200:
                         _LOGGER.error("Connection test failed - Status: %s", response.status)
+                        # Try to get response text for debugging
+                        try:
+                            response_text = await response.text()
+                            _LOGGER.error("Test response content: %s", response_text[:500])
+                        except Exception as text_err:
+                            _LOGGER.error("Could not read test response text: %s", text_err)
                         raise CannotConnect()
 
-                    _LOGGER.info("Connection test successful - Status: %s", response.status)
+                    # Check content type before attempting to parse
+                    content_type = response.headers.get('content-type', '').lower()
+                    _LOGGER.debug("Test response content-type: %s", content_type)
+                    
+                    if 'application/json' not in content_type and 'json' not in content_type:
+                        _LOGGER.error("Connection test returned non-JSON content type: %s", content_type)
+                        try:
+                            response_text = await response.text()
+                            _LOGGER.error("Test response content (first 1000 chars): %s", response_text[:1000])
+                        except Exception as text_err:
+                            _LOGGER.error("Could not read test response text: %s", text_err)
+                        raise CannotConnect()
+
+                    # Try to parse JSON to ensure it's valid
+                    try:
+                        await response.json()
+                        _LOGGER.info("Connection test successful - Status: %s, Valid JSON received", response.status)
+                    except Exception as json_err:
+                        _LOGGER.error("Connection test failed - Invalid JSON response: %s", json_err)
+                        try:
+                            response_text = await response.text()
+                            _LOGGER.error("Test response raw content: %s", response_text[:1000])
+                        except Exception as text_err:
+                            _LOGGER.error("Could not read test response text: %s", text_err)
+                        raise CannotConnect()
 
         except aiohttp.ClientError as err:
             _LOGGER.error("Connection error during test: %s", err)

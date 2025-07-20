@@ -13,6 +13,7 @@
     "error": {
       "cannot_connect": "Verbindung zur API fehlgeschlagen. Bitte überprüfen Sie die Basis-URL und den API-Code.",
       "invalid_auth": "Ungültiger API-Code. Bitte überprüfen Sie Ihre Anmeldedaten.",
+      "invalid_url": "Bitte geben Sie eine gültige API-Endpunkt-URL ein. Die Platzhalter-URL kann nicht verwendet werden.",
       "unknown": "Ein unerwarteter Fehler ist aufgetreten."
     },
     "abort": {

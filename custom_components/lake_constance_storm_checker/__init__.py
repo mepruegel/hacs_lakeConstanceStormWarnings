@@ -42,8 +42,25 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Get configuration
     base_url = entry.data[CONF_BASE_URL]
     api_code = entry.data[CONF_API_CODE]
+    
+    # Log the full configuration for debugging
+    _LOGGER.info("Full config entry data: %s", {k: v if k != CONF_API_CODE else "***" for k, v in entry.data.items()})
     _LOGGER.debug("Configuration loaded - Base URL: %s, API Code: %s", 
                   base_url, "***" if api_code else "None")
+    
+    # Check if we're using the default URL
+    if base_url == "https://your-api-endpoint.com":
+        _LOGGER.warning("Using default API endpoint URL - this suggests the configuration may not have been saved properly")
+        _LOGGER.warning("Please check your configuration in Home Assistant Settings > Devices & Services")
+    
+    # Validate configuration
+    if not base_url or base_url.strip() == "":
+        _LOGGER.error("Base URL is empty or invalid")
+        return False
+    
+    if not api_code or api_code.strip() == "":
+        _LOGGER.error("API code is empty or invalid")
+        return False
 
     # Create coordinator
     _LOGGER.debug("Creating coordinator with scan interval: %s seconds", DEFAULT_SCAN_INTERVAL)
@@ -123,17 +140,46 @@ class LakeConstanceStormCheckerCoordinator(DataUpdateCoordinator):
         try:
             async with self.session.get(url, params=params, timeout=10) as response:
                 _LOGGER.debug("API response status: %s", response.status)
+                _LOGGER.debug("API response headers: %s", dict(response.headers))
                 
                 if response.status == 401 or response.status == 403:
                     _LOGGER.error("Authentication failed - API returned status %s", response.status)
                     raise UpdateFailed("Invalid API code")
                 elif response.status != 200:
                     _LOGGER.error("API request failed - Status: %s", response.status)
+                    # Try to get response text for debugging
+                    try:
+                        response_text = await response.text()
+                        _LOGGER.error("Response content: %s", response_text[:500])  # Log first 500 chars
+                    except Exception as text_err:
+                        _LOGGER.error("Could not read response text: %s", text_err)
                     raise UpdateFailed(f"API returned status {response.status}")
 
-                data = await response.json()
-                _LOGGER.debug("Successfully received data from API: %s", data)
-                return data
+                # Check content type before parsing JSON
+                content_type = response.headers.get('content-type', '').lower()
+                _LOGGER.debug("Response content-type: %s", content_type)
+                
+                if 'application/json' not in content_type and 'json' not in content_type:
+                    _LOGGER.error("API returned non-JSON content type: %s", content_type)
+                    try:
+                        response_text = await response.text()
+                        _LOGGER.error("Response content (first 1000 chars): %s", response_text[:1000])
+                    except Exception as text_err:
+                        _LOGGER.error("Could not read response text: %s", text_err)
+                    raise UpdateFailed(f"API returned non-JSON content type: {content_type}")
+
+                try:
+                    data = await response.json()
+                    _LOGGER.debug("Successfully received data from API: %s", data)
+                    return data
+                except Exception as json_err:
+                    _LOGGER.error("Failed to parse JSON response: %s", json_err)
+                    try:
+                        response_text = await response.text()
+                        _LOGGER.error("Raw response content: %s", response_text[:1000])
+                    except Exception as text_err:
+                        _LOGGER.error("Could not read response text: %s", text_err)
+                    raise UpdateFailed(f"Failed to parse JSON response: {json_err}")
 
         except aiohttp.ClientError as err:
             _LOGGER.error("Connection error during API request: %s", err)
