@@ -24,7 +24,9 @@ from .const import (
     AREAS,
 )
 from . import services
-from .config_flow import LakeConstanceStormCheckerConfigFlow
+
+# Import config flow to ensure it's registered
+from . import config_flow
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -34,6 +36,12 @@ PLATFORMS: list[Platform] = [Platform.SENSOR, Platform.BINARY_SENSOR]
 async def async_setup(hass: HomeAssistant, config: Dict[str, Any]) -> bool:
     """Set up the Lake Constance Storm Checker component."""
     hass.data.setdefault(DOMAIN, {})
+    
+    # Register config flow
+    hass.config_entries.flow.async_register_flow_handler(
+        DOMAIN, config_flow.LakeConstanceStormCheckerConfigFlow
+    )
+    
     return True
 
 

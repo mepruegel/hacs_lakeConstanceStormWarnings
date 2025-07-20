@@ -8,7 +8,7 @@ from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
-from homeassistant.const import CONF_NAME
+
 
 from .const import (
     DOMAIN,
@@ -26,7 +26,7 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-class LakeConstanceStormCheckerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+class LakeConstanceStormCheckerConfigFlow(config_entries.ConfigFlow):
     """Handle a config flow for Lake Constance Storm Checker."""
 
     VERSION = 1
