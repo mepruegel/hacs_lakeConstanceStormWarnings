@@ -3,89 +3,20 @@
     "step": {
       "user": {
         "title": "Lake Constance Storm Checker",
-        "description": "Configure the Lake Constance Storm Checker integration to monitor storm warnings for Lake Constance areas.",
+        "description": "Configure the Lake Constance Storm Checker integration.",
         "data": {
           "base_url": "Base URL",
           "api_code": "API Code"
-        }
-      },
-      "test_connection": {
-        "title": "Test Connection",
-        "description": "Testing connection to the Lake Constance Storm Checker API..."
-      },
-      "options": {
-        "title": "Options",
-        "description": "Configure additional options for the Lake Constance Storm Checker integration.",
-        "data": {
-          "scan_interval": "Update Interval (seconds)",
-          "custom_names": {
-            "west": "West Area Name",
-            "center": "Center Area Name", 
-            "east": "East Area Name"
-          }
         }
       }
     },
     "error": {
       "cannot_connect": "Failed to connect to the API. Please check the base URL and API code.",
       "invalid_auth": "Invalid API code. Please check your credentials.",
-      "unknown": "Unexpected error occurred.",
-      "invalid_response": "Invalid response from the API.",
-      "missing_data": "Missing required data from the API response.",
-      "invalid_scan_interval": "Scan interval must be at least 60 seconds."
+      "unknown": "Unexpected error occurred."
     },
     "abort": {
       "already_configured": "Device is already configured."
-    }
-  },
-
-  "entity": {
-    "sensor": {
-      "lake_constance_west_status": {
-        "name": "Lake Constance West Status"
-      },
-      "lake_constance_center_status": {
-        "name": "Lake Constance Center Status"
-      },
-      "lake_constance_east_status": {
-        "name": "Lake Constance East Status"
-      },
-      "lake_constance_last_update": {
-        "name": "Lake Constance Last Update"
-      }
-    },
-    "binary_sensor": {
-      "lake_constance_west_warning": {
-        "name": "Lake Constance West Warning"
-      },
-      "lake_constance_center_warning": {
-        "name": "Lake Constance Center Warning"
-      },
-      "lake_constance_east_warning": {
-        "name": "Lake Constance East Warning"
-      },
-      "lake_constance_storm_warning": {
-        "name": "Lake Constance Storm Warning"
-      },
-      "lake_constance_strong_wind_warning": {
-        "name": "Lake Constance Strong Wind Warning"
-      }
-    }
-  },
-  "services": {
-    "refresh": {
-      "name": "Refresh Lake Constance Storm Data",
-      "description": "Manually refresh the storm warning data from the API."
-    },
-    "get_area_status": {
-      "name": "Get Area Status",
-      "description": "Get the current status for a specific Lake Constance area.",
-      "fields": {
-        "area": {
-          "name": "Area",
-          "description": "The area to get status for (west, center, or east)"
-        }
-      }
     }
   }
 } 
