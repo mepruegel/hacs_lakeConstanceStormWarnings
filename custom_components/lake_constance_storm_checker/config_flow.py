@@ -74,7 +74,7 @@ class LakeConstanceStormCheckerConfigFlow(config_entries.ConfigFlow, domain=DOMA
             data_schema=vol.Schema(
                 {
                     vol.Required(
-                        CONF_BASE_URL, default=""
+                        CONF_BASE_URL, default=DEFAULT_BASE_URL
                     ): str,
                     vol.Required(CONF_API_CODE): str,
                 }
@@ -102,6 +102,7 @@ class LakeConstanceStormCheckerConfigFlow(config_entries.ConfigFlow, domain=DOMA
                         CONF_CUSTOM_NAMES: {
                             area: user_input.get(f"custom_name_{area}", "")
                             for area in AREAS
+                            if user_input.get(f"custom_name_{area}", "").strip()
                         },
                     }
 

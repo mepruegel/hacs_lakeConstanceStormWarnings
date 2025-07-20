@@ -31,28 +31,14 @@
       "invalid_auth": "Ungültiger API-Code. Bitte überprüfen Sie Ihre Anmeldedaten.",
       "unknown": "Ein unerwarteter Fehler ist aufgetreten.",
       "invalid_response": "Ungültige Antwort von der API.",
-      "missing_data": "Erforderliche Daten aus der API-Antwort fehlen."
+      "missing_data": "Erforderliche Daten aus der API-Antwort fehlen.",
+      "invalid_scan_interval": "Aktualisierungsintervall muss mindestens 60 Sekunden betragen."
     },
     "abort": {
       "already_configured": "Gerät ist bereits konfiguriert."
     }
   },
-  "options": {
-    "step": {
-      "init": {
-        "title": "Optionen",
-        "description": "Konfigurieren Sie zusätzliche Optionen für die Bodensee Sturmwarnung Integration.",
-        "data": {
-          "scan_interval": "Aktualisierungsintervall (Sekunden)",
-          "custom_names": {
-            "west": "West-Bereich Name",
-            "center": "Mittel-Bereich Name",
-            "east": "Ost-Bereich Name"
-          }
-        }
-      }
-    }
-  },
+
   "entity": {
     "sensor": {
       "lake_constance_west_status": {

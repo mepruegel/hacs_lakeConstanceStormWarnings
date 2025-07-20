@@ -10,6 +10,7 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .const import (
     DOMAIN,
     AREAS,
+    CONF_CUSTOM_NAMES,
     BINARY_SENSOR_TYPE_WARNING,
     BINARY_SENSOR_TYPE_STORM_WARNING,
     BINARY_SENSOR_TYPE_STRONG_WIND_WARNING,
@@ -35,7 +36,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up the Lake Constance Storm Checker binary sensors."""
     coordinator = hass.data[DOMAIN][config_entry.entry_id]
-    custom_names = config_entry.data.get("custom_names", {})
+    custom_names = config_entry.data.get(CONF_CUSTOM_NAMES, {})
 
     entities = []
 
@@ -64,7 +65,7 @@ class LakeConstanceAreaWarningSensor(CoordinatorEntity, BinarySensorEntity):
         super().__init__(coordinator)
         self.area = area
         self.custom_name = custom_name
-        self._attr_unique_id = f"{coordinator.config_entry_id}_{area}_warning"
+        self._attr_unique_id = f"{DOMAIN}_{area}_warning"
         self._attr_name = (
             f"Lake Constance {area.title()} Warning"
             if not custom_name
@@ -121,7 +122,7 @@ class LakeConstanceStormWarningSensor(CoordinatorEntity, BinarySensorEntity):
     def __init__(self, coordinator: CoordinatorEntity) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
-        self._attr_unique_id = f"{coordinator.config_entry_id}_storm_warning"
+        self._attr_unique_id = f"{DOMAIN}_storm_warning"
         self._attr_name = "Lake Constance Storm Warning"
 
     @property
@@ -169,7 +170,7 @@ class LakeConstanceStrongWindWarningSensor(CoordinatorEntity, BinarySensorEntity
     def __init__(self, coordinator: CoordinatorEntity) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
-        self._attr_unique_id = f"{coordinator.config_entry_id}_strong_wind_warning"
+        self._attr_unique_id = f"{DOMAIN}_strong_wind_warning"
         self._attr_name = "Lake Constance Strong Wind Warning"
 
     @property

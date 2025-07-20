@@ -31,28 +31,14 @@
       "invalid_auth": "Invalid API code. Please check your credentials.",
       "unknown": "Unexpected error occurred.",
       "invalid_response": "Invalid response from the API.",
-      "missing_data": "Missing required data from the API response."
+      "missing_data": "Missing required data from the API response.",
+      "invalid_scan_interval": "Scan interval must be at least 60 seconds."
     },
     "abort": {
       "already_configured": "Device is already configured."
     }
   },
-  "options": {
-    "step": {
-      "init": {
-        "title": "Options",
-        "description": "Configure additional options for the Lake Constance Storm Checker integration.",
-        "data": {
-          "scan_interval": "Update Interval (seconds)",
-          "custom_names": {
-            "west": "West Area Name",
-            "center": "Center Area Name",
-            "east": "East Area Name"
-          }
-        }
-      }
-    }
-  },
+
   "entity": {
     "sensor": {
       "lake_constance_west_status": {
