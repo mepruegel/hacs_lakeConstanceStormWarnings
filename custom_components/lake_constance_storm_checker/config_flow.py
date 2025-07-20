@@ -74,7 +74,7 @@ class LakeConstanceStormCheckerConfigFlow(config_entries.ConfigFlow, domain=DOMA
             data_schema=vol.Schema(
                 {
                     vol.Required(
-                        CONF_BASE_URL, default=DEFAULT_BASE_URL
+                        CONF_BASE_URL, default=""
                     ): str,
                     vol.Required(CONF_API_CODE): str,
                 }

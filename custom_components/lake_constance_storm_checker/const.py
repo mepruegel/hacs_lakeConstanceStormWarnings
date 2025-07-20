@@ -12,7 +12,7 @@ CONF_CUSTOM_NAMES: Final = "custom_names"
 
 # Default values
 DEFAULT_SCAN_INTERVAL: Final = 300  # 5 minutes
-DEFAULT_BASE_URL: Final = "https://stormapi.mrclprgl.de"
+DEFAULT_BASE_URL: Final = "https://your-api-endpoint.com"
 
 # API constants
 PARTITION_KEY: Final = "lakeConstance"

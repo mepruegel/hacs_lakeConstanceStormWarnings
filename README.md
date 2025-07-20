@@ -37,7 +37,7 @@ A Home Assistant custom component for monitoring storm warnings for Lake Constan
 2. Click **Add Integration**
 3. Search for "Lake Constance Storm Checker"
 4. Enter your configuration:
-   - **Base URL**: The Azure Function base URL (e.g., `https://stormapi.mrclprgl.de`)
+   - **Base URL**: The Azure Function base URL (e.g., `https://your-api-endpoint.com`)
    - **API Code**: Your authentication code for the API
 5. Configure additional options:
    - **Update Interval**: How often to poll the API (default: 300 seconds)
@@ -48,7 +48,7 @@ A Home Assistant custom component for monitoring storm warnings for Lake Constan
 ```yaml
 # Example configuration.yaml entry
 lake_constance_storm_checker:
-  base_url: "https://stormapi.mrclprgl.de"
+  base_url: "https://your-api-endpoint.com"
   api_code: "your-api-code-here"
   scan_interval: 300  # 5 minutes
   custom_names:
@@ -152,7 +152,7 @@ logger:
 You can test the API manually using curl:
 
 ```bash
-curl "https://stormapi.mrclprgl.de/api/get-latest-status?code=YOUR_API_CODE&partitionKey=lakeConstance&simple=true"
+curl "https://your-api-endpoint.com/api/get-latest-status?code=YOUR_API_CODE&partitionKey=lakeConstance&simple=true"
 ```
 
 ## Development

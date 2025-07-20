@@ -37,7 +37,7 @@ def config_entry():
         "domain": DOMAIN,
         "title": "Lake Constance Storm Checker",
         "data": {
-            CONF_BASE_URL: "https://stormapi.mrclprgl.de",
+            CONF_BASE_URL: "https://your-api-endpoint.com",
             CONF_API_CODE: "test-api-code",
             CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL,
         },
