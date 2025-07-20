@@ -1,5 +1,6 @@
 """Sensor platform for Lake Constance Storm Checker."""
 import logging
+from datetime import datetime
 from typing import Any, Dict
 
 from homeassistant.components.sensor import SensorEntity
@@ -8,6 +9,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.util import dt as dt_util
 
 from .const import DOMAIN
 
@@ -268,10 +270,25 @@ class LakeConstanceLastUpdateSensor(CoordinatorEntity, SensorEntity):
         
         try:
             # Try to get timestamp from the data
-            timestamp = self.coordinator.data.get("timestamp") or self.coordinator.data.get("lastUpdate")
-            if timestamp:
-                _LOGGER.debug("Last update timestamp: %s", timestamp)
-                return timestamp
+            timestamp_str = self.coordinator.data.get("timestamp") or self.coordinator.data.get("lastUpdate")
+            if timestamp_str:
+                _LOGGER.debug("Last update timestamp string: %s", timestamp_str)
+                
+                # Parse the ISO format timestamp string to datetime object
+                try:
+                    # Use Home Assistant's datetime utility to parse the timestamp
+                    # This handles various ISO formats including timezone offsets
+                    dt = dt_util.parse_datetime(timestamp_str)
+                    if dt:
+                        _LOGGER.debug("Parsed timestamp to datetime: %s", dt)
+                        return dt
+                    else:
+                        _LOGGER.error("Failed to parse timestamp '%s' - returned None", timestamp_str)
+                        return "Error"
+                        
+                except ValueError as parse_error:
+                    _LOGGER.error("Failed to parse timestamp '%s': %s", timestamp_str, parse_error)
+                    return "Error"
             else:
                 _LOGGER.debug("No timestamp found in data")
                 return "NoData"
