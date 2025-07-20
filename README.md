@@ -186,13 +186,3 @@ For support and questions:
 2. Search existing [issues](../../issues)
 3. Create a new issue with detailed information
 
-## Changelog
-
-### Version 1.0.0
-- Initial release
-- Support for West, Center, and East areas
-- Status and binary sensors
-- Manual refresh service
-- Area status service
-- German and English translations
-- Secure configuration storage 
