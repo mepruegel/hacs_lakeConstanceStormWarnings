@@ -5,6 +5,7 @@ from typing import Any, Dict
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.typing import ConfigType
+import voluptuous as vol
 
 from .const import (
     DOMAIN,
@@ -19,9 +20,9 @@ _LOGGER = logging.getLogger(__name__)
 # Service schemas
 SERVICE_REFRESH_SCHEMA = cv.make_entity_service_schema({})
 
-SERVICE_GET_AREA_STATUS_SCHEMA = cv.make_entity_service_schema(
+SERVICE_GET_AREA_STATUS_SCHEMA = vol.Schema(
     {
-        cv.Required(SERVICE_DATA_AREA): cv.string,
+        vol.Required(SERVICE_DATA_AREA): str,
     }
 )
 
