@@ -57,8 +57,13 @@ class LakeConstanceWestStatusSensor(CoordinatorEntity, SensorEntity):
             return "NoData"
         
         try:
-            west_data = self.coordinator.data.get("west", {})
-            status = west_data.get("status", "UnknownStatus")
+            west_data = self.coordinator.data.get("west")
+            if isinstance(west_data, dict):
+                status = west_data.get("status", "UnknownStatus")
+            elif isinstance(west_data, str):
+                status = west_data
+            else:
+                status = "UnknownStatus"
             _LOGGER.debug("West area status: %s", status)
             return status
         except Exception as e:
@@ -87,9 +92,16 @@ class LakeConstanceWestStatusSensor(CoordinatorEntity, SensorEntity):
             return {}
 
         try:
-            west_data = self.coordinator.data.get("west", {})
-            _LOGGER.debug("Returning west data as extra state attributes")
-            return west_data
+            west_data = self.coordinator.data.get("west")
+            if isinstance(west_data, dict):
+                _LOGGER.debug("Returning west data as extra state attributes")
+                return west_data
+            elif isinstance(west_data, str):
+                _LOGGER.debug("West data is string, returning as status")
+                return {"status": west_data}
+            else:
+                _LOGGER.debug("West data is unknown type, returning empty")
+                return {}
         except Exception as e:
             _LOGGER.error("Error getting west attributes: %s", e)
             return {}
@@ -115,8 +127,13 @@ class LakeConstanceCenterStatusSensor(CoordinatorEntity, SensorEntity):
             return "NoData"
         
         try:
-            center_data = self.coordinator.data.get("center", {})
-            status = center_data.get("status", "UnknownStatus")
+            center_data = self.coordinator.data.get("center")
+            if isinstance(center_data, dict):
+                status = center_data.get("status", "UnknownStatus")
+            elif isinstance(center_data, str):
+                status = center_data
+            else:
+                status = "UnknownStatus"
             _LOGGER.debug("Center area status: %s", status)
             return status
         except Exception as e:
@@ -145,9 +162,16 @@ class LakeConstanceCenterStatusSensor(CoordinatorEntity, SensorEntity):
             return {}
 
         try:
-            center_data = self.coordinator.data.get("center", {})
-            _LOGGER.debug("Returning center data as extra state attributes")
-            return center_data
+            center_data = self.coordinator.data.get("center")
+            if isinstance(center_data, dict):
+                _LOGGER.debug("Returning center data as extra state attributes")
+                return center_data
+            elif isinstance(center_data, str):
+                _LOGGER.debug("Center data is string, returning as status")
+                return {"status": center_data}
+            else:
+                _LOGGER.debug("Center data is unknown type, returning empty")
+                return {}
         except Exception as e:
             _LOGGER.error("Error getting center attributes: %s", e)
             return {}
@@ -173,8 +197,13 @@ class LakeConstanceEastStatusSensor(CoordinatorEntity, SensorEntity):
             return "NoData"
         
         try:
-            east_data = self.coordinator.data.get("east", {})
-            status = east_data.get("status", "UnknownStatus")
+            east_data = self.coordinator.data.get("east")
+            if isinstance(east_data, dict):
+                status = east_data.get("status", "UnknownStatus")
+            elif isinstance(east_data, str):
+                status = east_data
+            else:
+                status = "UnknownStatus"
             _LOGGER.debug("East area status: %s", status)
             return status
         except Exception as e:
@@ -203,9 +232,16 @@ class LakeConstanceEastStatusSensor(CoordinatorEntity, SensorEntity):
             return {}
 
         try:
-            east_data = self.coordinator.data.get("east", {})
-            _LOGGER.debug("Returning east data as extra state attributes")
-            return east_data
+            east_data = self.coordinator.data.get("east")
+            if isinstance(east_data, dict):
+                _LOGGER.debug("Returning east data as extra state attributes")
+                return east_data
+            elif isinstance(east_data, str):
+                _LOGGER.debug("East data is string, returning as status")
+                return {"status": east_data}
+            else:
+                _LOGGER.debug("East data is unknown type, returning empty")
+                return {}
         except Exception as e:
             _LOGGER.error("Error getting east attributes: %s", e)
             return {}
