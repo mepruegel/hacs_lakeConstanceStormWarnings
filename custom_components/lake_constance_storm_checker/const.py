@@ -14,4 +14,8 @@ DEFAULT_BASE_URL: Final = "https://your-api-endpoint.com"
 
 # API constants
 PARTITION_KEY: Final = "lakeConstance"
-API_ENDPOINT: Final = "/api/get-latest-status" 
+API_ENDPOINT: Final = "/api/get-latest-status"
+
+# Logging constants
+LOG_NAME: Final = "lake_constance_storm_checker"
+LOG_PREFIX: Final = "[Lake Constance Storm Checker]" 
